@@ -1,0 +1,122 @@
+/* An agent's answer, in the system's text style: formulas by KaTeX, code in boxes. */
+:root { color-scheme: light dark; --size: 13px; --math: 1.16; }
+html { overflow: hidden; }
+html, body { margin: 0; padding: 0; background: transparent; }
+body {
+  font-family: var(--font, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif);
+  font-size: var(--size);
+  line-height: 1.45;
+  color: #1d1d1f;
+  color: -apple-system-label;
+  -webkit-text-size-adjust: 100%;
+  overflow-wrap: break-word;
+  -webkit-user-select: text;
+  user-select: text;
+}
+@media (prefers-color-scheme: dark) { body { color: #f2f2f7; color: -apple-system-label; } }
+#answer { display: flow-root; }
+#answer > :first-child { margin-top: 0; }
+#answer > :last-child { margin-bottom: 0; }
+p, ul, ol, blockquote, table, .code, .math-block { margin: 0 0 0.65em; }
+h1, h2, h3, h4, h5, h6 { margin: 0.9em 0 0.35em; line-height: 1.25; font-weight: 600; }
+h1 { font-size: 1.3em; }
+h2 { font-size: 1.18em; }
+h3 { font-size: 1.08em; }
+h4, h5, h6 { font-size: 1em; }
+ul, ol { padding-left: 1.45em; }
+li { margin: 0.15em 0; }
+li > p { margin: 0 0 0.3em; }
+a { color: #0066cc; color: -apple-system-blue; text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { font-weight: 600; }
+code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: rgba(127, 127, 127, 0.16);
+  border-radius: 4px;
+  padding: 0.08em 0.32em;
+}
+.code {
+  border-radius: 8px;
+  background: rgba(127, 127, 127, 0.09);
+  border: 1px solid rgba(127, 127, 127, 0.2);
+  overflow: hidden;
+}
+.code .lang {
+  font: 600 0.74em -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #6e6e73;
+  color: -apple-system-secondary-label;
+  padding: 6px 10px 0;
+  text-transform: lowercase;
+}
+.code pre { margin: 0; padding: 7px 10px 9px; overflow-x: auto; }
+.code pre code {
+  display: block;
+  background: none;
+  padding: 0;
+  font-size: 0.86em;
+  line-height: 1.45;
+  white-space: pre;
+}
+.hljs { background: transparent !important; padding: 0 !important; }
+.math-block { overflow-x: auto; overflow-y: hidden; }
+.katex-display { margin: 0.35em 0; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+/* Formulas a little larger than the words around them (--math, which fitting wide ones keeps to). */
+.katex { font-size: calc(var(--math) * 1em); }
+.katex-error { color: #c0392b; }
+table { border-collapse: collapse; display: block; overflow-x: auto; max-width: 100%; }
+th, td { border: 1px solid rgba(127, 127, 127, 0.3); padding: 3px 8px; text-align: left; vertical-align: top; }
+th { background: rgba(127, 127, 127, 0.1); font-weight: 600; }
+blockquote {
+  padding-left: 10px;
+  border-left: 3px solid rgba(127, 127, 127, 0.35);
+  color: #6e6e73;
+  color: -apple-system-secondary-label;
+}
+hr { border: none; border-top: 1px solid rgba(127, 127, 127, 0.3); margin: 0.8em 0; }
+img { max-width: 100%; }
+input[type="checkbox"] { margin: 0 0.35em 0 0; }
+
+/* A turn's steps, after a dot each: what the agent wrote, ran and changed. */
+.step { display: flex; align-items: flex-start; gap: 0.5em; margin: 0 0 0.5em; }
+.step:last-child { margin-bottom: 0; }
+.step > .dot { flex: none; width: 1em; text-align: center; font-size: 1.2em; line-height: 1.21; }
+.step.said > .dot { color: inherit; }
+.step.ran > .dot, .step.changed > .dot { color: #28a745; }
+.step.failed > .dot { color: #e5484d; }
+.step > .body { flex: 1; min-width: 0; }
+.step.said > .body > :last-child { margin-bottom: 0; }
+.step .head { display: flex; align-items: baseline; gap: 0.35em; }
+.step.opens > .body > .head { cursor: pointer; }
+.chevron { flex: none; display: inline-block; color: #8e8e93; color: -apple-system-tertiary-label; font-weight: 600; transition: transform 0.12s ease; }
+.step.open > .body > .head > .chevron { transform: rotate(90deg); }
+.call { font-weight: 600; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.call .arg { font-weight: 400; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.9em; }
+.outcome { display: flex; align-items: baseline; gap: 0.6em; color: #6e6e73; color: -apple-system-secondary-label; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.84em; margin-top: 0.1em; }
+.outcome > .corner { flex: none; padding-left: 0.2em; }
+.outcome > .summary { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.outcome > .view, details > summary { cursor: pointer; color: #0066cc; color: -apple-system-blue; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.outcome > .view { flex: none; font-size: 1.05em; }
+.step .output { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.84em; color: #6e6e73; color: -apple-system-secondary-label; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0.25em 0 0.1em; padding: 0.4em 0.6em; border-radius: 6px; background: rgba(127, 127, 127, 0.08); }
+.step .output[hidden], .step .actions[hidden] { display: none; }
+.step.group .actions { margin-top: 0.4em; }
+.step.group .actions .step { margin-bottom: 0.35em; }
+.step.group .actions .dot { font-size: 0.95em; line-height: 1.5; }
+details.changes { margin-top: 0.7em; padding-top: 0.5em; border-top: 1px solid rgba(127, 127, 127, 0.25); }
+details.changes > summary { font-weight: 600; }
+.change { margin-top: 0.7em; }
+.change-head .summary { color: #6e6e73; color: -apple-system-secondary-label; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.84em; }
+details.fold > summary { font-size: 0.86em; margin-top: 0.2em; }
+table.diff { display: table; border-collapse: collapse; width: 100%; margin-top: 0.3em; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.84em; }
+table.diff td { border: none; padding: 0 0.45em; vertical-align: top; line-height: 1.4; }
+table.diff td.num { width: 1%; text-align: right; white-space: nowrap; color: #8e8e93; color: -apple-system-tertiary-label; -webkit-user-select: none; user-select: none; }
+table.diff td.sign { width: 1%; padding: 0 0.2em; -webkit-user-select: none; user-select: none; }
+table.diff td.text { white-space: pre-wrap; overflow-wrap: anywhere; }
+table.diff tr.add { background: rgba(40, 167, 69, 0.15); }
+table.diff tr.del { background: rgba(229, 72, 77, 0.14); }
+table.diff tr.gap td { color: #8e8e93; color: -apple-system-tertiary-label; }
+
+/* A selection kept after moving on to the message box. */
+::highlight(kept) { background-color: rgba(10, 132, 255, 0.28); }
+/* Words searched for in the agent window. */
+::highlight(search) { background-color: rgba(255, 196, 0, 0.5); }
